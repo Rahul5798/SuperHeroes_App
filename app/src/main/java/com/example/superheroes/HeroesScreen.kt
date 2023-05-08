@@ -18,7 +18,9 @@ import androidx.compose.foundation.lazy.items
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.CardElevation
+import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -33,6 +35,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.example.superheroes.model.Hero
 import com.example.superheroes.model.HeroesDataSource
+import com.example.superheroes.model.HeroesDataSource.heroes
 import com.example.superheroes.ui.theme.SuperheroesTheme
 import org.intellij.lang.annotations.JdkConstants.HorizontalAlignment
 
@@ -40,7 +43,7 @@ import org.intellij.lang.annotations.JdkConstants.HorizontalAlignment
 fun SuperHeroItemCard(hero: Hero, modifier : Modifier = Modifier){
     Card(modifier = modifier
         .clip(MaterialTheme.shapes.medium)
-        .padding(8.dp,16.dp)
+        .padding(8.dp, 16.dp)
     ){
         Row(modifier = modifier
             .padding(16.dp)
@@ -74,18 +77,19 @@ fun SuperHeroItemCard(hero: Hero, modifier : Modifier = Modifier){
         }
     }
 }
-@Composable
-fun SuperHeroItemList(heroes : List<Hero>, modifier: Modifier = Modifier){
-    LazyColumn{
-        items(heroes){
-            hero -> SuperHeroItemCard(hero = hero)
-        }
-    }
-}
+
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun SuperHeroApp(){
-    SuperheroesTheme() {
-        SuperHeroItemList(heroes = HeroesDataSource.heroes)
+    Scaffold(
+        topBar = { SuperHeoTopAppBar() }
+    ) { it ->
+        LazyColumn(contentPadding = it){
+            items(heroes){
+                    hero -> SuperHeroItemCard(hero = hero)
+            }
+        }
+
     }
 }
 @Preview(showBackground = true, apiLevel = 33)
