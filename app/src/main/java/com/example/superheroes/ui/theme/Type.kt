@@ -40,6 +40,6 @@ val Typography = Typography(
     displaySmall = TextStyle(
         fontFamily = Cabin,
         fontWeight = FontWeight.Bold,
-        fontSize = 10.sp
+        fontSize = 20.sp
     )
 )
